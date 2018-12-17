@@ -115,13 +115,21 @@ namespace TestGame
                     if (e.Button == MouseButtons.Left && SelectedBuildiing != null)
                     {
                         _game.Buildings[hoverCellX, hoverCellY] = new Building(SelectedBuildiing);
+                        SelectedBuildiing = null;
                     }
                 }
                 else
                 {
                     if (e.Button == MouseButtons.Left)
                     {
-                        _game.Buildings[hoverCellX, hoverCellY].Name = "click";                       
+                        if (SelectedBuildiing == null)
+                        {
+                            MessageBox.Show(_game.Buildings[hoverCellX, hoverCellY].Name + " click");  
+                        }
+                        else
+                        {
+                            MessageBox.Show("Здесь нельзя строить");
+                        }
                     }
                     else
                     {
