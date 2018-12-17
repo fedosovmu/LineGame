@@ -17,6 +17,7 @@ namespace TestGame
         private const int _y = GameScene.PixelHeight;
         public const int Height = 200;
         public const int Width = 500;
+        public static String SelectedBuildingName = null;
 
 
 
@@ -34,7 +35,7 @@ namespace TestGame
             {
                 if (e.Button == MouseButtons.Right)
                 {
-                    GameScene.SelectedBuildiing = null;
+                    SelectedBuildingName = null;
                 }
             };
         }
@@ -63,7 +64,7 @@ namespace TestGame
             button.MouseClick += (s, e) =>
             {
                 //MessageBox.Show(Capture + " Click");
-                GameScene.SelectedBuildiing = Capture;
+                SelectedBuildingName = Capture;
             };
 
             return button;
