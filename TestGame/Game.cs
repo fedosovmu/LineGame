@@ -8,7 +8,7 @@ namespace TestGame
 {
     class Game
     {
-        public const int SceneWindth = 15;
+        public const int SceneWindth = 17;
         public const int SceneHeight = 9;
         public Building[,] Buildings;
 

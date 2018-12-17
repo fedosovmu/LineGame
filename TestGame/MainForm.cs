@@ -13,18 +13,19 @@ namespace TestGame
     public partial class MainForm : Form
     {
         public Timer MainTimer;
-        private Bitmap Btm;
+        public static Bitmap Btm;
         public static Graphics G;
         public static Color BackgroundColor;
         private GameScene _gameScene;
         private ButtonsPanel _buttonsPanel;
+        private InfoPanel _infoPanel;
         private Game _game;
 
 
         public MainForm()
         {
             InitializeComponent();
-            this.Size = new Size(GameScene.CellSize * Game.SceneWindth + 100, GameScene.CellSize * Game.SceneHeight + ButtonsPanel.Height + 100);
+            this.Size = new Size(GameScene.PixelWidth + 100, GameScene.PixelHeight + ButtonsPanel.Height + 100);
 
             Btm = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
             G = Graphics.FromImage(Btm);
@@ -40,6 +41,7 @@ namespace TestGame
             _game = new Game();
             _gameScene = new GameScene(this, _game);
             _buttonsPanel = new ButtonsPanel(this, _game);
+            _infoPanel = new InfoPanel(this, _game);
 
             MainTimer.Tick += (s, e) => this.Refresh();          
         }

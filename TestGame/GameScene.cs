@@ -25,7 +25,6 @@ namespace TestGame
         public static Color BlackCellColor;
         public static Color SelectedCellColor;
 
-        //public static String SelectedBuildiing = null; // <-- Для демонстрации
         public delegate void GameSceneClickEventHandler(int x, int y);
         public event GameSceneClickEventHandler Click;
 
@@ -78,20 +77,24 @@ namespace TestGame
                 var position = _mainForm.PointToClient(Cursor.Position);
                 int hoverCellX = position.X / CellSize;
                 int hoverCellY = position.Y / CellSize;
-                if (_game.Buildings[hoverCellX, hoverCellY] != null)
+                int x = hoverCellX * CellSize;
+                int y = hoverCellY * CellSize;
+
+                if (_game.Buildings[hoverCellX, hoverCellY] != null && ButtonsPanel.SelectedBuildingName == null)
                 {
-                    MainForm.G.FillRectangle(new SolidBrush(SelectedCellColor), hoverCellX * CellSize, hoverCellY * CellSize, InnerCellSize, InnerCellSize);
+                    MainForm.G.FillRectangle(new SolidBrush(SelectedCellColor), x, y, InnerCellSize, InnerCellSize);
                 }
+
                 if (ButtonsPanel.SelectedBuildingName != null)
                 {
                     if (_game.Buildings[hoverCellX, hoverCellY] == null)
                     {
-                        MainForm.G.FillRectangle(new SolidBrush(Color.FromArgb(40, 150, 40)), hoverCellX * CellSize, hoverCellY * CellSize, InnerCellSize, InnerCellSize);
+                        MainForm.G.FillRectangle(new SolidBrush(Color.FromArgb(40, 150, 40)), x, y, InnerCellSize, InnerCellSize);
                         BuildingPainter.DrawOnGrid(new Building(ButtonsPanel.SelectedBuildingName), hoverCellX, hoverCellY);
                     }
                     else
                     {
-                        MainForm.G.FillRectangle(new SolidBrush(Color.FromArgb(150, 40, 40)), hoverCellX * CellSize, hoverCellY * CellSize, InnerCellSize, InnerCellSize);
+                        MainForm.G.FillRectangle(new SolidBrush(Color.FromArgb(150, 40, 40)), x, y, InnerCellSize, InnerCellSize);
                     }
 
                 }

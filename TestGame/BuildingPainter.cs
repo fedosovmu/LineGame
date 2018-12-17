@@ -13,6 +13,9 @@ namespace TestGame
         private static Font _font;
         private static SolidBrush _fontBrush;
         private static StringFormat _stringFormat;
+        private const int indent = 4;
+
+
 
         static BuildingPainter ()
         {
@@ -34,10 +37,8 @@ namespace TestGame
 
 
 
-        public static void Draw(Building building, int x, int y)
+        public static void Draw(Building building, int x, int y, int buildSize = GameScene.InnerCellSize - 2 * indent)
         {
-            const int indent = 4;
-            const int buildSize = GameScene.InnerCellSize - 2 * indent;
             MainForm.G.DrawRectangle(_pen, new Rectangle(x + indent, y + indent, buildSize, buildSize));
 
 

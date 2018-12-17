@@ -13,10 +13,10 @@ namespace TestGame
         private MainForm _mainForm;
         private Game _game;
         private MouseHoverZone _mouseHoverZone;
-        private const int _x = 0;
+        private const int _x = -1;
         private const int _y = GameScene.PixelHeight;
         public const int Height = 200;
-        public const int Width = 500;
+        public const int Width = 700;
         public static String SelectedBuildingName = null;
 
 
@@ -51,19 +51,24 @@ namespace TestGame
             const int buildingIndent = (buttonSize - GameScene.CellSize) / 2 + 2;
 
             Button button = new Button(_mainForm, buttonX, buttonY, buttonSize, buttonSize);
+
+
+
             button.MouseLeave += (s, e) =>
             {
-                MainForm.G.FillRectangle(new SolidBrush(GameScene.BlackCellColor), buttonX - 1, buttonY - 1, buttonSize + 2, buttonSize + 2);
+                var color = GameScene.BlackCellColor;
+                MainForm.G.FillRectangle(new SolidBrush(color), buttonX - 1, buttonY - 1, buttonSize + 2, buttonSize + 2);
                 BuildingPainter.Draw(buttonBuilding, buttonX + buildingIndent, buttonY + buildingIndent);
             };
+
             button.MouseHover += (s, e) =>
             {
-                MainForm.G.FillRectangle(new SolidBrush(GameScene.SelectedCellColor), buttonX, buttonY, buttonSize, buttonSize);
+                var color = GameScene.SelectedCellColor;
+                MainForm.G.FillRectangle(new SolidBrush(color), buttonX, buttonY, buttonSize, buttonSize);
                 BuildingPainter.Draw(buttonBuilding, buttonX + buildingIndent, buttonY + buildingIndent);
             };
             button.MouseClick += (s, e) =>
             {
-                //MessageBox.Show(Capture + " Click");
                 SelectedBuildingName = Capture;
             };
 
