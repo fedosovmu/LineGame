@@ -18,12 +18,13 @@ namespace TestGame
         public static Color BackgroundColor;
         private GameScene _gameScene;
         private ButtonsPanel _buttonsPanel;
-        int x = 0;
+        private Game _game;
 
 
         public MainForm()
         {
             InitializeComponent();
+            this.Size = new Size(GameScene.CellSize * Game.SceneWindth + 100, GameScene.CellSize * Game.SceneHeight + ButtonsPanel.Height + 100);
 
             Btm = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
             G = Graphics.FromImage(Btm);
@@ -36,10 +37,11 @@ namespace TestGame
             MainTimer = new Timer();
             MainTimer.Interval = 50;
 
-            _gameScene = new GameScene(this);
-            _buttonsPanel = new ButtonsPanel(this);
+            _game = new Game();
+            _gameScene = new GameScene(this, _game);
+            _buttonsPanel = new ButtonsPanel(this, _game);
 
-            MainTimer.Tick += (s, e) => this.Refresh();        
+            MainTimer.Tick += (s, e) => this.Refresh();          
         }
 
 
