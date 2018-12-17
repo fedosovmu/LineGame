@@ -17,8 +17,6 @@ namespace TestGame
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             MainForm mainForm = new MainForm();
-            GameScene gameScene = new GameScene(mainForm);
-            ButtonsPanel buttonsPanel = new ButtonsPanel(mainForm);
             Application.Run(mainForm);
         }
     }

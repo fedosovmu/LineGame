@@ -11,6 +11,9 @@ namespace TestGame
     class ButtonsPanel
     {
         private MainForm _mainForm;
+        private MouseHoverZone _mouseHoverZone;
+        private const int _x = 0;
+        private const int _y = GameScene.PixelHeight;
         private const int _panelHeight = 150;
         private const int _panelWidth = 500;
 
@@ -20,23 +23,19 @@ namespace TestGame
             _mainForm = form;
             _mainForm.Shown += Form_Shown;
             _mainForm.MouseClick += Form_MouseClick;
-            _mainForm.MouseMove += Form_MouseMove;
-        }
-
-
-
-        private void Clear()
-        {
-            MainForm.G.FillRectangle(new SolidBrush(MainForm.BackgroundColor), 0, GameScene.PixelHeight, _panelWidth, _panelHeight);
+            _mainForm.MainTimer.Tick += Timer_Tick;
+            _mouseHoverZone = new MouseHoverZone(_mainForm, _x, _y, _panelWidth, _panelHeight);
         }
 
 
 
         private void DrawPanel (int mouseX = -1, int mouseY = -1)
         {
-            this.Clear();
+            // Draw background
+            MainForm.G.FillRectangle(new SolidBrush(MainForm.BackgroundColor), _x, _y, _panelWidth, _panelHeight);
 
-            if ((mouseY > GameScene.PixelHeight && mouseX < _panelWidth) && (mouseX >= 0 && mouseY >= 0))
+            // Draw selected items
+            if (_mouseHoverZone.IsMouseHover())
             {
                 const int bright = 120;
                 Color selectedItemColor = Color.FromArgb(bright, bright, bright);
@@ -46,24 +45,23 @@ namespace TestGame
 
 
 
-
         private void Form_Shown (object sender, EventArgs e)
         {
             DrawPanel();
-            _mainForm.Refresh();
         }
+
+
 
         private void Form_MouseClick(object sender, MouseEventArgs e)
         {
 
         }
 
-        private void Form_MouseMove (object sender, MouseEventArgs e)
+
+
+        private void Timer_Tick (object sender, EventArgs e)
         {
-            if (e.Y >= GameScene.SceneHeight)
-            {
-                DrawPanel(e.X, e.Y);
-            }
+            DrawPanel();
         }
     }
 }

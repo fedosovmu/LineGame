@@ -12,10 +12,13 @@ namespace TestGame
 {
     public partial class MainForm : Form
     {
-        private static Bitmap Btm;
+        public Timer MainTimer;
+        private Bitmap Btm;
         public static Graphics G;
         public static Color BackgroundColor;
-
+        private GameScene _gameScene;
+        private ButtonsPanel _buttonsPanel;
+        int x = 0;
 
 
         public MainForm()
@@ -26,15 +29,25 @@ namespace TestGame
             G = Graphics.FromImage(Btm);
             G.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             this.BackgroundImage = Btm;
-
+            this.DoubleBuffered = true;
+            //SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
             BackgroundColor = Color.FromArgb(10, 10, 10);
+
+            MainTimer = new Timer();
+            MainTimer.Interval = 50;
+
+            _gameScene = new GameScene(this);
+            _buttonsPanel = new ButtonsPanel(this);
+
+            MainTimer.Tick += (s, e) => this.Refresh();        
         }
 
 
 
         private void MainForm_Shown(object sender, EventArgs e)
-        {
-            this.DoubleBuffered = true;
+        {          
+            MainTimer.Start();
+            this.Refresh();
         }
     }
 }
