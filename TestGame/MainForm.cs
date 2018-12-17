@@ -12,10 +12,10 @@ namespace TestGame
 {
     public partial class MainForm : Form
     {
-        public Timer MainTimer;
         public static Bitmap Btm;
         public static Graphics G;
         public static Color BackgroundColor;
+        private Timer _mainTimer;
         private GameScene _gameScene;
         private ButtonsPanel _buttonsPanel;
         private InfoPanel _infoPanel;
@@ -35,22 +35,22 @@ namespace TestGame
             //SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
             BackgroundColor = Color.FromArgb(10, 10, 10);
 
-            MainTimer = new Timer();
-            MainTimer.Interval = 50;
+            _mainTimer = new Timer();
+            _mainTimer.Interval = 50;
 
             _game = new Game();
-            _gameScene = new GameScene(this, _game);
-            _buttonsPanel = new ButtonsPanel(this, _game);
-            _infoPanel = new InfoPanel(this, _game);
+            _gameScene = new GameScene(this, _game, _mainTimer);
+            _buttonsPanel = new ButtonsPanel(this, _game, _mainTimer);
+            _infoPanel = new InfoPanel(this, _game, _mainTimer);
 
-            MainTimer.Tick += (s, e) => this.Refresh();          
+            _mainTimer.Tick += (s, e) => this.Refresh();          
         }
 
 
 
         private void MainForm_Shown(object sender, EventArgs e)
-        {          
-            MainTimer.Start();
+        {
+            _mainTimer.Start();
             this.Refresh();
         }
     }

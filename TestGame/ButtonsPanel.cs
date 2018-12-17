@@ -21,15 +21,15 @@ namespace TestGame
 
 
 
-        public ButtonsPanel (MainForm form, Game game)
+        public ButtonsPanel (MainForm form, Game game, Timer timer)
         {
             _mainForm = form;
             _game = game;
             _mainForm.Shown += Form_Shown;
             _mouseHoverZone = new MouseHoverZone(_mainForm, _x, _y, Width, Height);
-            var button1 = ButtonsInitialization("Extractor", 30, 50);
-            var button2 = ButtonsInitialization("Converter", 150, 50);
-            var button3 = ButtonsInitialization("Storage", 270, 50);
+            var button1 = ButtonsInitialization(timer, "Extractor", 30, 50);
+            var button2 = ButtonsInitialization(timer, "Converter", 150, 50);
+            var button3 = ButtonsInitialization(timer, "Storage", 270, 50);
 
             _mainForm.MouseClick += (s, e) =>
             {
@@ -42,7 +42,7 @@ namespace TestGame
 
 
 
-        private Button ButtonsInitialization(String Capture, int x, int y)
+        private Button ButtonsInitialization(Timer timer, String Capture, int x, int y)
         {
             int buttonX = _x + x;
             int buttonY = _y + y;
@@ -50,7 +50,7 @@ namespace TestGame
             Building buttonBuilding = new Building(Capture);
             const int buildingIndent = (buttonSize - GameScene.CellSize) / 2 + 2;
 
-            Button button = new Button(_mainForm, buttonX, buttonY, buttonSize, buttonSize);
+            Button button = new Button(_mainForm, timer, buttonX, buttonY, buttonSize, buttonSize);
 
 
 

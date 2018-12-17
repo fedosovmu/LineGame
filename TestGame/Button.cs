@@ -16,10 +16,10 @@ namespace TestGame
 
 
 
-        public Button (MainForm form, int x, int y, int width, int height)
+        public Button (MainForm form, Timer timer, int x, int y, int width, int height)
             : base (form, x, y, width, height)
         {
-            form.MainTimer.Tick += Timer_Tick;
+            timer.Tick += Timer_Tick;
             form.MouseClick += Form_MouseClick;
             form.Shown += (s, e) => MouseLeave(s, e);
         }

@@ -30,14 +30,14 @@ namespace TestGame
 
 
 
-        public GameScene(MainForm form, Game game)
+        public GameScene(MainForm form, Game game, Timer timer)
         {
             _mainForm = form;
             _game = game;
 
             _mainForm.Shown += Form_Shown;
             _mainForm.MouseClick += Form_MouseClick;
-            _mainForm.MainTimer.Tick += Timer_Tick;
+            timer.Tick += Timer_Tick;
 
             _mainForm.ClientSize = new Size(Game.SceneWindth * CellSize, Game.SceneHeight * CellSize + ButtonsPanel.Height);
             _mouseHoverZone = new MouseHoverZone(_mainForm, 0, 0, Game.SceneWindth * CellSize, Game.SceneHeight * CellSize);

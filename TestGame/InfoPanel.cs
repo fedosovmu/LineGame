@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace TestGame
 {
@@ -19,13 +20,13 @@ namespace TestGame
 
 
 
-        public InfoPanel(MainForm form, Game game)
+        public InfoPanel(MainForm form, Game game, Timer timer)
         {
             _mainForm = form;
             _game = game;
             _mouseHoverZone = new MouseHoverZone(_mainForm, _x, _y, Width, Height);
             _mainForm.Shown += Form_Shown;
-            _mainForm.MainTimer.Tick += (s, e) => DrawPanel();
+            timer.Tick += (s, e) => DrawPanel();
 
         }
 
