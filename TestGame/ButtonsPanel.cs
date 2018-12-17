@@ -34,6 +34,11 @@ namespace TestGame
             // Draw background
             MainForm.G.FillRectangle(new SolidBrush(MainForm.BackgroundColor), _x, _y, _panelWidth, _panelHeight);
 
+            Font font = new Font("Arial", 16);
+            SolidBrush fontBrush = new SolidBrush(Color.White);
+            String header = "Здания и преобразователи:";
+            MainForm.G.DrawString(header, font, fontBrush, _x + 10, _y + 10);
+
             // Draw selected items
             if (_mouseHoverZone.IsMouseHover())
             {
