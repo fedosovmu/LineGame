@@ -26,17 +26,27 @@ namespace TestGame
             _game = game;
             _mainForm.Shown += Form_Shown;
             _mouseHoverZone = new MouseHoverZone(_mainForm, _x, _y, Width, Height);
-            ButtonsInitialization();
+            var button1 = ButtonsInitialization("Extractor", 30, 50);
+            var button2 = ButtonsInitialization("Converter", 150, 50);
+            var button3 = ButtonsInitialization("Storage", 270, 50);
+
+            _mainForm.MouseClick += (s, e) =>
+            {
+                if (e.Button == MouseButtons.Right)
+                {
+                    GameScene.SelectedBuildiing = null;
+                }
+            };
         }
 
 
 
-        private void ButtonsInitialization()
+        private Button ButtonsInitialization(String Capture, int x, int y)
         {
-            int buttonX = _x + 30;
-            int buttonY = _y + 50;
+            int buttonX = _x + x;
+            int buttonY = _y + y;
             const int buttonSize = 100;
-            Building buttonBuilding = new Building("extractor");
+            Building buttonBuilding = new Building(Capture);
             const int buildingIndent = (buttonSize - GameScene.CellSize) / 2 + 2;
 
             Button button = new Button(_mainForm, buttonX, buttonY, buttonSize, buttonSize);
@@ -52,8 +62,11 @@ namespace TestGame
             };
             button.MouseClick += (s, e) =>
             {
-                MessageBox.Show("Button1 Click");
+                //MessageBox.Show(Capture + " Click");
+                GameScene.SelectedBuildiing = Capture;
             };
+
+            return button;
         }
 
 

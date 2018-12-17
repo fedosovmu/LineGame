@@ -45,7 +45,7 @@ namespace TestGame
             int centerX = x + textIndent; // 70->32, 50->23
             int centerY = y + textIndent;
             String name = building.Name;
-            const int strMaxLenght = GameScene.CellSize / 7;
+            const int strMaxLenght = GameScene.CellSize / 7 ;
             if (name.Length > strMaxLenght) //50 -> 7, 70 -> 11
             {
                 name = name.Insert(strMaxLenght, "\n");

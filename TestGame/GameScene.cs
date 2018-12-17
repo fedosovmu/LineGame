@@ -25,6 +25,8 @@ namespace TestGame
         public static Color BlackCellColor;
         public static Color SelectedCellColor;
 
+        public static String SelectedBuildiing = null; // <-- Для демонстрации
+
 
 
         public GameScene(MainForm form, Game game)
@@ -78,6 +80,11 @@ namespace TestGame
                 {
                     MainForm.G.FillRectangle(new SolidBrush(SelectedCellColor), hoverCellX * CellSize, hoverCellY * CellSize, InnerCellSize, InnerCellSize);
                 }
+                if (_game.Buildings[hoverCellX, hoverCellY] == null && SelectedBuildiing != null)
+                {
+                    MainForm.G.FillRectangle(new SolidBrush(Color.FromArgb(80, 120, 80)), hoverCellX * CellSize, hoverCellY * CellSize, InnerCellSize, InnerCellSize);
+                    BuildingPainter.DrawOnGrid(new Building(SelectedBuildiing), hoverCellX, hoverCellY);
+                }
             }
 
             // Draw buildings
@@ -103,20 +110,26 @@ namespace TestGame
                 var position = _mainForm.PointToClient(Cursor.Position);
                 int hoverCellX = position.X / CellSize;
                 int hoverCellY = position.Y / CellSize;
-                if (_game.Buildings[hoverCellX, hoverCellY] != null)
+                if (_game.Buildings[hoverCellX, hoverCellY] == null)
                 {
-                    if (e.Button == MouseButtons.Right)
+                    if (e.Button == MouseButtons.Left && SelectedBuildiing != null)
                     {
-                        _game.Buildings[hoverCellX, hoverCellY] = null;
-                    }
-                    else
-                    {
-                        _game.Buildings[hoverCellX, hoverCellY].Name = "click";
+                        _game.Buildings[hoverCellX, hoverCellY] = new Building(SelectedBuildiing);
                     }
                 }
                 else
                 {
-                    _game.Buildings[hoverCellX, hoverCellY] = new Building("new");
+                    if (e.Button == MouseButtons.Left)
+                    {
+                        _game.Buildings[hoverCellX, hoverCellY].Name = "click";                       
+                    }
+                    else
+                    {
+                        if (SelectedBuildiing == null)
+                        {
+                            _game.Buildings[hoverCellX, hoverCellY] = null;
+                        }
+                    }
                 }
             }
         }
