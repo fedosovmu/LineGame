@@ -28,7 +28,7 @@ namespace TestGame
 
 
 
-        public Button (MainForm form, Timer timer,int x, int y, int width, int height, DrawNormal drawNormal, DrawHover drawHover, DrawActive drawActive)
+        public Button (MainForm form, Timer timer, int x, int y, int width, int height, DrawNormal drawNormal, DrawHover drawHover, DrawActive drawActive)
         {
             _mouseHoverZone = new MouseHoverZone(form, x, y, width, height);
             _x = x;

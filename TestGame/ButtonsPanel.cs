@@ -17,16 +17,16 @@ namespace TestGame
         private const int _y = GameScene.PixelHeight;
         public const int Height = 200;
         public const int Width = 700;
-        public static String SelectedBuildingName { get; private set; } // <- Костыль
-        private static Button _button1; // Костыль
-        private static Button _button2; // Костыль
-        private static Button _button3; // Костыль
+        public String SelectedButtonName { get; private set; }
+        private Button _button1;
+        private Button _button2;
+        private Button _button3;
 
 
 
         public ButtonsPanel(MainForm form, Game game, Timer timer)
         {
-            SelectedBuildingName = null;
+            SelectedButtonName = null;
             _mainForm = form;
             _game = game;
             _mainForm.Shown += Form_Shown;
@@ -46,9 +46,9 @@ namespace TestGame
 
 
 
-        public static void DeactivateButtons() // Костыль
+        public void DeactivateButtons() // Костыль
         {
-            SelectedBuildingName = null;
+            SelectedButtonName = null;
             _button1.Deactivate();
             _button2.Deactivate();
             _button3.Deactivate();
@@ -88,7 +88,7 @@ namespace TestGame
 
             button.Click += (s, e) =>
             {
-                SelectedBuildingName = Capture;
+                SelectedButtonName = Capture;
             };
 
             return button;

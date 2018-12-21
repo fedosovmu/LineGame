@@ -12,6 +12,7 @@ namespace TestGame
     {
         private MainForm _mainForm;
         private Game _game;
+        private ButtonsPanel _buttonsPanel;
         private MouseHoverZone _mouseHoverZone;
 
         public const int CellSize = 70;
@@ -30,10 +31,11 @@ namespace TestGame
 
 
 
-        public GameScene(MainForm form, Game game, Timer timer)
+        public GameScene(MainForm form, Game game, Timer timer, ButtonsPanel buttonsPanel)
         {
             _mainForm = form;
             _game = game;
+            _buttonsPanel = buttonsPanel;
 
             _mainForm.Shown += Form_Shown;
             _mainForm.MouseClick += Form_MouseClick;
@@ -80,17 +82,17 @@ namespace TestGame
                 int x = hoverCellX * CellSize;
                 int y = hoverCellY * CellSize;
 
-                if (_game.Buildings[hoverCellX, hoverCellY] != null && ButtonsPanel.SelectedBuildingName == null)
+                if (_game.Buildings[hoverCellX, hoverCellY] != null && _buttonsPanel.SelectedButtonName == null)
                 {
                     MainForm.G.FillRectangle(new SolidBrush(HoverCellColor), x, y, InnerCellSize, InnerCellSize);
                 }
 
-                if (ButtonsPanel.SelectedBuildingName != null)
+                if (_buttonsPanel.SelectedButtonName != null)
                 {
                     if (_game.Buildings[hoverCellX, hoverCellY] == null)
                     {
                         MainForm.G.FillRectangle(new SolidBrush(Color.FromArgb(40, 150, 40)), x, y, InnerCellSize, InnerCellSize);
-                        BuildingPainter.DrawOnGrid(new Building(ButtonsPanel.SelectedBuildingName), hoverCellX, hoverCellY);
+                        BuildingPainter.DrawOnGrid(new Building(_buttonsPanel.SelectedButtonName), hoverCellX, hoverCellY);
                     }
                     else
                     {
@@ -125,17 +127,17 @@ namespace TestGame
                 int hoverCellY = position.Y / CellSize;
                 if (_game.Buildings[hoverCellX, hoverCellY] == null)
                 {
-                    if (e.Button == MouseButtons.Left && ButtonsPanel.SelectedBuildingName != null)
+                    if (e.Button == MouseButtons.Left && _buttonsPanel.SelectedButtonName != null)
                     {
-                        _game.Buildings[hoverCellX, hoverCellY] = new Building(ButtonsPanel.SelectedBuildingName);
-                        ButtonsPanel.DeactivateButtons();
+                        _game.Buildings[hoverCellX, hoverCellY] = new Building(_buttonsPanel.SelectedButtonName);
+                        _buttonsPanel.DeactivateButtons();
                     }
                 }
                 else
                 {
                     if (e.Button == MouseButtons.Left)
                     {
-                        if (ButtonsPanel.SelectedBuildingName == null)
+                        if (_buttonsPanel.SelectedButtonName == null)
                         {
                             MessageBox.Show(_game.Buildings[hoverCellX, hoverCellY].Name + " click");  
                         }
@@ -146,7 +148,7 @@ namespace TestGame
                     }
                     else
                     {
-                        if (ButtonsPanel.SelectedBuildingName == null)
+                        if (_buttonsPanel.SelectedButtonName == null)
                         {
                             _game.Buildings[hoverCellX, hoverCellY] = null;
                         }
