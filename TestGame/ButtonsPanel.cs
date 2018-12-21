@@ -17,27 +17,41 @@ namespace TestGame
         private const int _y = GameScene.PixelHeight;
         public const int Height = 200;
         public const int Width = 700;
-        public static String SelectedBuildingName = null;
+        public static String SelectedBuildingName { get; private set; } // <- Костыль
+        private static Button _button1; // Костыль
+        private static Button _button2; // Костыль
+        private static Button _button3; // Костыль
 
 
 
-        public ButtonsPanel (MainForm form, Game game, Timer timer)
+        public ButtonsPanel(MainForm form, Game game, Timer timer)
         {
+            SelectedBuildingName = null;
             _mainForm = form;
             _game = game;
             _mainForm.Shown += Form_Shown;
             _mouseHoverZone = new MouseHoverZone(_mainForm, _x, _y, Width, Height);
-            var button1 = ButtonsInitialization(timer, "Extractor", 30, 50);
-            var button2 = ButtonsInitialization(timer, "Converter", 150, 50);
-            var button3 = ButtonsInitialization(timer, "Storage", 270, 50);
+            _button1 = ButtonsInitialization(timer, "Extractor", 30, 50);
+            _button2 = ButtonsInitialization(timer, "Converter", 150, 50);
+            _button3 = ButtonsInitialization(timer, "Storage", 270, 50);
 
             _mainForm.MouseClick += (s, e) =>
             {
                 if (e.Button == MouseButtons.Right)
-                {
-                    SelectedBuildingName = null;
+                {                    
+                    DeactivateButtons();
                 }
             };
+        }
+
+
+
+        public static void DeactivateButtons() // Костыль
+        {
+            SelectedBuildingName = null;
+            _button1.Deactivate();
+            _button2.Deactivate();
+            _button3.Deactivate();
         }
 
 

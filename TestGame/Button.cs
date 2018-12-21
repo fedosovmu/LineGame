@@ -67,7 +67,10 @@ namespace TestGame
                 if (_isMouseHover == false)
                 {
                     _isMouseHover = true;
-                    _drawHover(_x, _y, _windth, _height);                    
+                    if (_isButtonActive == false)
+                    {
+                        _drawHover(_x, _y, _windth, _height);   
+                    }                 
                 }
             }
             else

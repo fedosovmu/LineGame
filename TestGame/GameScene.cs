@@ -128,7 +128,7 @@ namespace TestGame
                     if (e.Button == MouseButtons.Left && ButtonsPanel.SelectedBuildingName != null)
                     {
                         _game.Buildings[hoverCellX, hoverCellY] = new Building(ButtonsPanel.SelectedBuildingName);
-                        ButtonsPanel.SelectedBuildingName = null;
+                        ButtonsPanel.DeactivateButtons();
                     }
                 }
                 else
