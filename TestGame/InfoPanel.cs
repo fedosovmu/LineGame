@@ -27,7 +27,6 @@ namespace TestGame
             _mouseHoverZone = new MouseHoverZone(_mainForm, _x, _y, Width, Height);
             _mainForm.Shown += Form_Shown;
             timer.Tick += (s, e) => DrawPanel();
-
         }
 
 
@@ -51,6 +50,14 @@ namespace TestGame
             // Draw building window      
             var pen = new Pen(new SolidBrush(Color.White), 2);
             MainForm.G.DrawRectangle(pen, new Rectangle(_x + 16, _y + 40, wiondowSize, wiondowSize));
+
+
+            // Draw ping info    
+            //var text = "раз раз";
+            //MainForm.G.DrawString(text, font, fontBrush, _x + 170, _y + 40);
+            //_tickNumber++;
+            //var distance = (_tickNumber % 100) * 2 + _tickNumber % 2;
+            //MainForm.G.FillRectangle(new SolidBrush(Color.Yellow), _x + 170 + distance, _y + 40, 30, 30);
         }
 
 

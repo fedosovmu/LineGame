@@ -44,30 +44,35 @@ namespace TestGame
 
         private Button ButtonsInitialization(Timer timer, String Capture, int x, int y)
         {
-            int buttonX = _x + x;
-            int buttonY = _y + y;
             const int buttonSize = 100;
             Building buttonBuilding = new Building(Capture);
             const int buildingIndent = (buttonSize - GameScene.CellSize) / 2 + 2;
 
-            Button button = new Button(_mainForm, timer, buttonX, buttonY, buttonSize, buttonSize);
-
-
-
-            button.MouseLeave += (s, e) =>
+            Button.DrawNormal drawNormal = (buttonX, buttonY, width, height) =>
             {
-                var color = GameScene.BlackCellColor;
-                MainForm.G.FillRectangle(new SolidBrush(color), buttonX - 1, buttonY - 1, buttonSize + 2, buttonSize + 2);
+                var color = GameScene.NormalCellColor;
+                MainForm.G.FillRectangle(new SolidBrush(color), buttonX - 1, buttonY - 1, width + 2, height + 2);
                 BuildingPainter.Draw(buttonBuilding, buttonX + buildingIndent, buttonY + buildingIndent);
             };
 
-            button.MouseHover += (s, e) =>
+            Button.DrawHover drawHover = (buttonX, buttonY, width, height) =>
             {
-                var color = GameScene.SelectedCellColor;
-                MainForm.G.FillRectangle(new SolidBrush(color), buttonX, buttonY, buttonSize, buttonSize);
+                var color = GameScene.HoverCellColor;
+                MainForm.G.FillRectangle(new SolidBrush(color), buttonX, buttonY, width, height);
                 BuildingPainter.Draw(buttonBuilding, buttonX + buildingIndent, buttonY + buildingIndent);
             };
-            button.MouseClick += (s, e) =>
+
+            Button.DrawActive drawActive = (buttonX, buttonY, width, height) =>
+            {
+                var color = Color.FromArgb(40, 150, 40);
+                MainForm.G.FillRectangle(new SolidBrush(color), buttonX, buttonY, width, height);
+                BuildingPainter.Draw(buttonBuilding, buttonX + buildingIndent, buttonY + buildingIndent);
+            };
+
+            var button = new Button(_mainForm, timer, _x + x, _y + y, buttonSize, buttonSize, drawNormal, drawHover, drawActive);
+
+
+            button.Click += (s, e) =>
             {
                 SelectedBuildingName = Capture;
             };

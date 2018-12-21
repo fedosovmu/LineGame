@@ -19,7 +19,8 @@ namespace TestGame
         private GameScene _gameScene;
         private ButtonsPanel _buttonsPanel;
         private InfoPanel _infoPanel;
-        private Game _game;
+        private Game _game;       
+
 
 
         public MainForm()
@@ -36,7 +37,7 @@ namespace TestGame
             BackgroundColor = Color.FromArgb(10, 10, 10);
 
             _mainTimer = new Timer();
-            _mainTimer.Interval = 50;
+            _mainTimer.Interval = 25;
 
             _game = new Game();
             _gameScene = new GameScene(this, _game, _mainTimer);

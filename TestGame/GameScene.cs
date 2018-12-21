@@ -22,8 +22,8 @@ namespace TestGame
         private int _selectedCellX = -1;
         private int _selectedCellY = -1;
 
-        public static Color BlackCellColor;
-        public static Color SelectedCellColor;
+        public static Color NormalCellColor;
+        public static Color HoverCellColor;
 
         public delegate void GameSceneClickEventHandler(int x, int y);
         public event GameSceneClickEventHandler Click;
@@ -43,9 +43,9 @@ namespace TestGame
             _mouseHoverZone = new MouseHoverZone(_mainForm, 0, 0, Game.SceneWindth * CellSize, Game.SceneHeight * CellSize);
 
             const int bright = 12;
-            BlackCellColor = Color.FromArgb(bright, bright, bright);
+            NormalCellColor = Color.FromArgb(bright, bright, bright);
             const int bright2 = 120;
-            SelectedCellColor = Color.FromArgb(bright2, bright2, bright2);
+            HoverCellColor = Color.FromArgb(bright2, bright2, bright2);
         }
 
 
@@ -67,7 +67,7 @@ namespace TestGame
             {
                 for (int x = 0; x < Game.SceneWindth; x++)
                 {
-                    MainForm.G.FillRectangle(new SolidBrush(BlackCellColor), x * CellSize, y * CellSize, InnerCellSize, InnerCellSize);
+                    MainForm.G.FillRectangle(new SolidBrush(NormalCellColor), x * CellSize, y * CellSize, InnerCellSize, InnerCellSize);
                 }
             }
 
@@ -82,7 +82,7 @@ namespace TestGame
 
                 if (_game.Buildings[hoverCellX, hoverCellY] != null && ButtonsPanel.SelectedBuildingName == null)
                 {
-                    MainForm.G.FillRectangle(new SolidBrush(SelectedCellColor), x, y, InnerCellSize, InnerCellSize);
+                    MainForm.G.FillRectangle(new SolidBrush(HoverCellColor), x, y, InnerCellSize, InnerCellSize);
                 }
 
                 if (ButtonsPanel.SelectedBuildingName != null)
