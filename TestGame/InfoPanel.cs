@@ -12,7 +12,6 @@ namespace TestGame
     {
         private MainForm _mainForm;
         private Game _game;
-        private MouseHoverZone _mouseHoverZone;
         private const int _x = ButtonsPanel.Width - 2;
         private const int _y = GameScene.Height;
         public const int Height = ButtonsPanel.Height;
@@ -24,7 +23,6 @@ namespace TestGame
         {
             _mainForm = form;
             _game = game;
-            _mouseHoverZone = new MouseHoverZone(_mainForm, _x, _y, Width, Height);
             _mainForm.Shown += Form_Shown;
             timer.Tick += (s, e) => DrawPanel();
         }
@@ -38,20 +36,32 @@ namespace TestGame
 
             Font font = new Font("Arial", 16);
             SolidBrush fontBrush = new SolidBrush(Color.White);
-            String header = "Информация:";
-            MainForm.G.DrawString(header, font, fontBrush, _x + 10, _y + 10);
+            //String header = "Информация:";
+            //MainForm.G.DrawString(header, font, fontBrush, _x + 10, _y + 10);
 
 
-            // Draw building
-            const int windowX = _x + 16;
-            const int windowY = _y + 50;
-            const int windowSize = 130;
-            int point = GameScene.CellSize * 2 - 31;
-            MainForm.G.DrawImage(MainForm.Btm, windowX, windowY, new Rectangle(point, point, windowSize, windowSize), GraphicsUnit.Pixel);
+            if (GameScene.CellSecector.IsCellSelected())
+            {
+                int selectedX = GameScene.CellSecector.X;
+                int selectedY = GameScene.CellSecector.Y;
 
-            // Draw building window      
-            var pen = new Pen(new SolidBrush(Color.White), 2);
-            MainForm.G.DrawRectangle(pen, new Rectangle(windowX, windowY, windowSize, windowSize));
+                String header = _game.Buildings[selectedX, selectedY].Name;
+                MainForm.G.DrawString(header, font, fontBrush, _x + 10, _y + 10);
+
+                // Draw building
+                const int windowX = _x + 16;
+                const int windowY = _y + 50;
+                const int windowSize = 130;
+                int posX = (GameScene.CellSize * selectedX) - 31;
+                int posY = (GameScene.CellSize * selectedY) - 31;
+                MainForm.G.DrawImage(MainForm.Btm, windowX, windowY, new Rectangle(posX, posY, windowSize, windowSize), GraphicsUnit.Pixel);
+
+                // Draw building window      
+                var pen = new Pen(new SolidBrush(Color.White), 2);
+                MainForm.G.DrawRectangle(pen, new Rectangle(windowX, windowY, windowSize, windowSize));
+            }
+
+
 
 
             // Draw ping info    

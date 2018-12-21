@@ -46,7 +46,7 @@ namespace TestGame
 
 
 
-        public void DeactivateButtons() // Костыль
+        public void DeactivateButtons()
         {
             SelectedButtonName = null;
             _button1.Deactivate();
@@ -79,7 +79,7 @@ namespace TestGame
 
             Button.DrawActive drawActive = (buttonX, buttonY, width, height) =>
             {
-                var color = Color.FromArgb(40, 150, 40);
+                var color = GameScene.GreenColor;
                 MainForm.G.FillRectangle(new SolidBrush(color), buttonX, buttonY, width, height);
                 BuildingPainter.Draw(buttonBuilding, buttonX + buildingIndent, buttonY + buildingIndent);
             };
@@ -90,6 +90,7 @@ namespace TestGame
             button.Click += (s, e) =>
             {
                 SelectedButtonName = Capture;
+                GameScene.CellSecector.Deselect(); // <- костыль
             };
 
             return button;

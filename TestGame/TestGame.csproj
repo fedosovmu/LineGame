@@ -50,6 +50,7 @@
     <Compile Include="BuildingPainter.cs" />
     <Compile Include="Button.cs" />
     <Compile Include="ButtonsPanel.cs" />
+    <Compile Include="CellSecector.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameScene.cs" />
     <Compile Include="GameSceneMouseHoverZone.cs" />
