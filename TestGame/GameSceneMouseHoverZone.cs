@@ -16,7 +16,7 @@ namespace TestGame
 
 
         public GameSceneMouseHoverZone(MainForm form)
-            : base(form, GameScene.X, GameScene.Y, GameScene.Height, GameScene.Width)
+            : base(form, GameScene.X, GameScene.Y, GameScene.Width, GameScene.Height)
         {
             _mainForm = form;
             _mainForm.MouseClick += (s, e) =>
