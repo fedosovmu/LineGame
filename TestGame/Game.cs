@@ -8,7 +8,7 @@ namespace TestGame
 {
     class Game
     {
-        public const int SceneWindth = 17;
+        public const int SceneWidth = 17;
         public const int SceneHeight = 9;
         public Building[,] Buildings;
 
@@ -16,7 +16,7 @@ namespace TestGame
 
         public Game ()
         {
-            Buildings = new Building[SceneWindth, SceneHeight];
+            Buildings = new Building[SceneWidth, SceneHeight];
             Buildings[3, 4] = new Building(); //test
             Buildings[2, 2] = new Building("extractor"); //test
         }

@@ -26,7 +26,7 @@ namespace TestGame
         public MainForm()
         {
             InitializeComponent();
-            this.Size = new Size(GameScene.PixelWidth + 100, GameScene.PixelHeight + ButtonsPanel.Height + 100);
+            this.Size = new Size(GameScene.Width + 100, GameScene.Height + ButtonsPanel.Height + 100);
 
             Btm = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
             G = Graphics.FromImage(Btm);
@@ -34,8 +34,8 @@ namespace TestGame
             this.BackgroundImage = Btm;
             this.DoubleBuffered = true;
             //SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
-            BackgroundColor = Color.FromArgb(10, 10, 10);
-
+            BackgroundColor = Color.FromArgb(10, 10, 10);           
+            
             _mainTimer = new Timer();
             _mainTimer.Interval = 25;
 

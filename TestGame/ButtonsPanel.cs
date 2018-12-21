@@ -12,15 +12,15 @@ namespace TestGame
     {
         private MainForm _mainForm;
         private Game _game;
-        private MouseHoverZone _mouseHoverZone;
-        private const int _x = -1;
-        private const int _y = GameScene.PixelHeight;
+        public const int X = -1;
+        public const int Y = GameScene.Height;
         public const int Height = 200;
         public const int Width = 700;
         public String SelectedButtonName { get; private set; }
         private Button _button1;
         private Button _button2;
         private Button _button3;
+        private Button _button4;
 
 
 
@@ -30,10 +30,10 @@ namespace TestGame
             _mainForm = form;
             _game = game;
             _mainForm.Shown += Form_Shown;
-            _mouseHoverZone = new MouseHoverZone(_mainForm, _x, _y, Width, Height);
             _button1 = ButtonsInitialization(timer, "Extractor", 30, 50);
             _button2 = ButtonsInitialization(timer, "Converter", 150, 50);
             _button3 = ButtonsInitialization(timer, "Storage", 270, 50);
+            _button4 = ButtonsInitialization(timer, "LoL", 390, 50);
 
             _mainForm.MouseClick += (s, e) =>
             {
@@ -52,6 +52,7 @@ namespace TestGame
             _button1.Deactivate();
             _button2.Deactivate();
             _button3.Deactivate();
+            _button4.Deactivate();
         }
 
 
@@ -83,7 +84,7 @@ namespace TestGame
                 BuildingPainter.Draw(buttonBuilding, buttonX + buildingIndent, buttonY + buildingIndent);
             };
 
-            var button = new Button(_mainForm, timer, _x + x, _y + y, buttonSize, buttonSize, drawNormal, drawHover, drawActive);
+            var button = new Button(_mainForm, timer, X + x, Y + y, buttonSize, buttonSize, drawNormal, drawHover, drawActive);
 
 
             button.Click += (s, e) =>
@@ -99,12 +100,12 @@ namespace TestGame
         private void DrawPanel (int mouseX = -1, int mouseY = -1)
         {
             // Draw background
-            MainForm.G.FillRectangle(new SolidBrush(MainForm.BackgroundColor), _x, _y, Width, Height);
+            MainForm.G.FillRectangle(new SolidBrush(MainForm.BackgroundColor), X, Y, Width, Height);
 
             Font font = new Font("Arial", 16);
             SolidBrush fontBrush = new SolidBrush(Color.White);
             String header = "Здания и преобразователи:";
-            MainForm.G.DrawString(header, font, fontBrush, _x + 10, _y + 10);
+            MainForm.G.DrawString(header, font, fontBrush, X + 10, Y + 10);
         }
 
 

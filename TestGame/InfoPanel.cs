@@ -14,9 +14,9 @@ namespace TestGame
         private Game _game;
         private MouseHoverZone _mouseHoverZone;
         private const int _x = ButtonsPanel.Width - 2;
-        private const int _y = GameScene.PixelHeight;
+        private const int _y = GameScene.Height;
         public const int Height = ButtonsPanel.Height;
-        public const int Width = GameScene.PixelWidth - ButtonsPanel.Width + 2;
+        public const int Width = GameScene.Width - ButtonsPanel.Width + 2;
 
 
 
@@ -43,13 +43,15 @@ namespace TestGame
 
 
             // Draw building
-            const int wiondowSize = 130;
+            const int windowX = _x + 16;
+            const int windowY = _y + 50;
+            const int windowSize = 130;
             int point = GameScene.CellSize * 2 - 31;
-            MainForm.G.DrawImage(MainForm.Btm, _x + 16, _y + 40, new Rectangle(point, point, wiondowSize, wiondowSize), GraphicsUnit.Pixel);
+            MainForm.G.DrawImage(MainForm.Btm, windowX, windowY, new Rectangle(point, point, windowSize, windowSize), GraphicsUnit.Pixel);
 
             // Draw building window      
             var pen = new Pen(new SolidBrush(Color.White), 2);
-            MainForm.G.DrawRectangle(pen, new Rectangle(_x + 16, _y + 40, wiondowSize, wiondowSize));
+            MainForm.G.DrawRectangle(pen, new Rectangle(windowX, windowY, windowSize, windowSize));
 
 
             // Draw ping info    

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace TestGame
 {
@@ -13,21 +14,20 @@ namespace TestGame
         private MainForm _mainForm;
         private Game _game;
         private ButtonsPanel _buttonsPanel;
-        private MouseHoverZone _mouseHoverZone;
+        private GameSceneMouseHoverZone _gameSceneMouseHoverZone;
 
+        public const int X = 0;
+        public const int Y = 0;
         public const int CellSize = 70;
         public const int InnerCellSize = CellSize - 4;
-        public const int PixelHeight = Game.SceneHeight * CellSize;
-        public const int PixelWidth = Game.SceneWindth * CellSize;
+        public const int Width = Game.SceneWidth * CellSize;
+        public const int Height = Game.SceneHeight * CellSize; 
 
-        private int _selectedCellX = -1;
-        private int _selectedCellY = -1;
+        public int SelectedCellX { get; private set; } = -1;
+        public int SelectedCellY { get; private set; } = -1;
 
         public static Color NormalCellColor;
         public static Color HoverCellColor;
-
-        public delegate void GameSceneClickEventHandler(int x, int y);
-        public event GameSceneClickEventHandler Click;
 
 
 
@@ -36,13 +36,13 @@ namespace TestGame
             _mainForm = form;
             _game = game;
             _buttonsPanel = buttonsPanel;
+            _gameSceneMouseHoverZone = new GameSceneMouseHoverZone(_mainForm);
 
             _mainForm.Shown += Form_Shown;
-            _mainForm.MouseClick += Form_MouseClick;
+            _gameSceneMouseHoverZone.ClickOnCell += ClickOnCell;
             timer.Tick += Timer_Tick;
 
-            _mainForm.ClientSize = new Size(Game.SceneWindth * CellSize, Game.SceneHeight * CellSize + ButtonsPanel.Height);
-            _mouseHoverZone = new MouseHoverZone(_mainForm, 0, 0, Game.SceneWindth * CellSize, Game.SceneHeight * CellSize);
+            _mainForm.ClientSize = new Size(GameScene.Width, GameScene.Height + ButtonsPanel.Height);
 
             const int bright = 12;
             NormalCellColor = Color.FromArgb(bright, bright, bright);
@@ -62,41 +62,42 @@ namespace TestGame
         private void DrawScene()
         {
             // Draw background
-            MainForm.G.FillRectangle(new SolidBrush(MainForm.BackgroundColor), 0, 0, Game.SceneWindth * CellSize, Game.SceneHeight * CellSize);
+            MainForm.G.FillRectangle(new SolidBrush(MainForm.BackgroundColor), X, Y, GameScene.Width, GameScene.Height);
 
-            // Draw black cells
+            // Draw normal cells
             for (int y = 0; y < Game.SceneHeight; y++)
             {
-                for (int x = 0; x < Game.SceneWindth; x++)
+                for (int x = 0; x < Game.SceneWidth; x++)
                 {
                     MainForm.G.FillRectangle(new SolidBrush(NormalCellColor), x * CellSize, y * CellSize, InnerCellSize, InnerCellSize);
                 }
             }
 
-            // Draw mouse hover cell
-            if (_mouseHoverZone.IsMouseHover())
+            // Draw hover cell
+            if (_gameSceneMouseHoverZone.IsMouseHover())
             {
-                var position = _mainForm.PointToClient(Cursor.Position);
-                int hoverCellX = position.X / CellSize;
-                int hoverCellY = position.Y / CellSize;
-                int x = hoverCellX * CellSize;
-                int y = hoverCellY * CellSize;
+                var coordinates = _gameSceneMouseHoverZone.GetHoverCellCoordinate();
+                int hoverCellX = coordinates.Item1;
+                int hoverCellY = coordinates.Item2;
+
+                int posX = hoverCellX * CellSize;
+                int posY = hoverCellY * CellSize;
 
                 if (_game.Buildings[hoverCellX, hoverCellY] != null && _buttonsPanel.SelectedButtonName == null)
                 {
-                    MainForm.G.FillRectangle(new SolidBrush(HoverCellColor), x, y, InnerCellSize, InnerCellSize);
+                    MainForm.G.FillRectangle(new SolidBrush(HoverCellColor), posX, posY, InnerCellSize, InnerCellSize);
                 }
 
                 if (_buttonsPanel.SelectedButtonName != null)
                 {
                     if (_game.Buildings[hoverCellX, hoverCellY] == null)
                     {
-                        MainForm.G.FillRectangle(new SolidBrush(Color.FromArgb(40, 150, 40)), x, y, InnerCellSize, InnerCellSize);
+                        MainForm.G.FillRectangle(new SolidBrush(Color.FromArgb(40, 150, 40)), posX, posY, InnerCellSize, InnerCellSize);
                         BuildingPainter.DrawOnGrid(new Building(_buttonsPanel.SelectedButtonName), hoverCellX, hoverCellY);
                     }
                     else
                     {
-                        MainForm.G.FillRectangle(new SolidBrush(Color.FromArgb(150, 40, 40)), x, y, InnerCellSize, InnerCellSize);
+                        MainForm.G.FillRectangle(new SolidBrush(Color.FromArgb(150, 40, 40)), posX, posY, InnerCellSize, InnerCellSize);
                     }
 
                 }
@@ -105,7 +106,7 @@ namespace TestGame
             // Draw buildings
             for (int y = 0; y < Game.SceneHeight; y++)
             {
-                for (int x = 0; x < Game.SceneWindth; x++)
+                for (int x = 0; x < Game.SceneWidth; x++)
                 {
                     if (_game.Buildings[x, y] != null)
                     {
@@ -118,43 +119,37 @@ namespace TestGame
 
 
 
-        private void Form_MouseClick(object sender, MouseEventArgs e)
+        private void ClickOnCell(object s, MouseEventArgs e, int hoverCellX, int hoverCellY)
         {
-            if (_mouseHoverZone.IsMouseHover())
+            if (_game.Buildings[hoverCellX, hoverCellY] == null)
             {
-                var position = _mainForm.PointToClient(Cursor.Position);
-                int hoverCellX = position.X / CellSize;
-                int hoverCellY = position.Y / CellSize;
-                if (_game.Buildings[hoverCellX, hoverCellY] == null)
+                if (e.Button == MouseButtons.Left && _buttonsPanel.SelectedButtonName != null)
                 {
-                    if (e.Button == MouseButtons.Left && _buttonsPanel.SelectedButtonName != null)
+                    _game.Buildings[hoverCellX, hoverCellY] = new Building(_buttonsPanel.SelectedButtonName);
+                    _buttonsPanel.DeactivateButtons();
+                }
+            }
+            else
+            {
+                if (e.Button == MouseButtons.Left)
+                {
+                    if (_buttonsPanel.SelectedButtonName == null)
                     {
-                        _game.Buildings[hoverCellX, hoverCellY] = new Building(_buttonsPanel.SelectedButtonName);
-                        _buttonsPanel.DeactivateButtons();
+                        MessageBox.Show(_game.Buildings[hoverCellX, hoverCellY].Name + " click");  
+                    }
+                    else
+                    {
+                        MessageBox.Show("Здесь нельзя строить");
                     }
                 }
                 else
                 {
-                    if (e.Button == MouseButtons.Left)
+                    if (_buttonsPanel.SelectedButtonName == null)
                     {
-                        if (_buttonsPanel.SelectedButtonName == null)
-                        {
-                            MessageBox.Show(_game.Buildings[hoverCellX, hoverCellY].Name + " click");  
-                        }
-                        else
-                        {
-                            MessageBox.Show("Здесь нельзя строить");
-                        }
-                    }
-                    else
-                    {
-                        if (_buttonsPanel.SelectedButtonName == null)
-                        {
-                            _game.Buildings[hoverCellX, hoverCellY] = null;
-                        }
+                        _game.Buildings[hoverCellX, hoverCellY] = null;
                     }
                 }
-            }
+            }        
         }
 
 

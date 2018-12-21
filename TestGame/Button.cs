@@ -16,11 +16,9 @@ namespace TestGame
         private DrawNormal _drawNormal;
         private DrawHover _drawHover;
         private DrawActive _drawActive;
-
         private MouseHoverZone _mouseHoverZone;
         private bool _isMouseHover = false;
         private bool _isButtonActive = false;
-
         private int _x;
         private int _y;
         private int _windth;
