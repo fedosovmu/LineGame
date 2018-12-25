@@ -52,8 +52,8 @@ namespace TestGame
                 const int windowX = _x + 16;
                 const int windowY = _y + 50;
                 const int windowSize = 130;
-                int posX = (GameScene.CellSize * selectedX) - 31;
-                int posY = (GameScene.CellSize * selectedY) - 31;
+                int posX = (CellPainter.CellSize * selectedX) - 31;
+                int posY = (CellPainter.CellSize * selectedY) - 31;
                 MainForm.G.DrawImage(MainForm.Btm, windowX, windowY, new Rectangle(posX, posY, windowSize, windowSize), GraphicsUnit.Pixel);
 
                 // Draw building window      

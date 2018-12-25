@@ -32,21 +32,21 @@ namespace TestGame
 
         public static void DrawOnGrid(Building building, int x, int y)
         {
-            Draw(building, x * GameScene.CellSize, y * GameScene.CellSize);
+            Draw(building, x * CellPainter.CellSize, y * CellPainter.CellSize);
         }
 
 
 
-        public static void Draw(Building building, int x, int y, int buildSize = GameScene.InnerCellSize - 2 * indent)
+        public static void Draw(Building building, int x, int y, int buildSize = CellPainter.InnerCellSize - 2 * indent)
         {
             MainForm.G.DrawRectangle(_pen, new Rectangle(x + indent, y + indent, buildSize, buildSize));
 
 
-            const int textIndent = GameScene.CellSize * 47 / 100;
+            const int textIndent = CellPainter.CellSize * 47 / 100;
             int centerX = x + textIndent; // 70->32, 50->23
             int centerY = y + textIndent;
             String name = building.Name;
-            const int strMaxLenght = GameScene.CellSize / 7 ;
+            const int strMaxLenght = CellPainter.CellSize / 7 ;
             if (name.Length > strMaxLenght) //50 -> 7, 70 -> 11
             {
                 name = name.Insert(strMaxLenght, "\n");

@@ -41,25 +41,25 @@ namespace TestGame
         {
             const int buttonSize = 100;
             Building buttonBuilding = new Building(capture);
-            const int buildingIndent = (buttonSize - GameScene.CellSize) / 2 + 2;
+            const int buildingIndent = (buttonSize - CellPainter.CellSize) / 2 + 2;
 
             Button.Draw drawNormal = (buttonX, buttonY, width, height) =>
             {
-                var color = GameScene.NormalCellColor;
+                var color = CellPainter.NormalCellColor;
                 MainForm.G.FillRectangle(new SolidBrush(color), buttonX - 1, buttonY - 1, width + 2, height + 2);
                 BuildingPainter.Draw(buttonBuilding, buttonX + buildingIndent, buttonY + buildingIndent);
             };
 
             Button.Draw drawHover = (buttonX, buttonY, width, height) =>
             {
-                var color = GameScene.HoverCellColor;
+                var color = CellPainter.HoverCellColor;
                 MainForm.G.FillRectangle(new SolidBrush(color), buttonX, buttonY, width, height);
                 BuildingPainter.Draw(buttonBuilding, buttonX + buildingIndent, buttonY + buildingIndent);
             };
 
             Button.Draw drawActive = (buttonX, buttonY, width, height) =>
             {
-                var color = GameScene.GreenColor;
+                var color = CellPainter.GreenColor;
                 MainForm.G.FillRectangle(new SolidBrush(color), buttonX, buttonY, width, height);
                 BuildingPainter.Draw(buttonBuilding, buttonX + buildingIndent, buttonY + buildingIndent);
             };

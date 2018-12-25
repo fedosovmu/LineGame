@@ -53,6 +53,7 @@
     <Compile Include="View\ButtonsPanel.cs" />
     <Compile Include="Controller\CellSelector.cs" />
     <Compile Include="Model\Game.cs" />
+    <Compile Include="View\CellPainter.cs" />
     <Compile Include="View\GameScene.cs" />
     <Compile Include="Controller\GameSceneZone.cs" />
     <Compile Include="View\InfoPanel.cs" />

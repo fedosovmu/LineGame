@@ -13,20 +13,12 @@ namespace TestGame
     {
         private MainForm _mainForm;
         private Game _game;
-        private GameSceneZone _gameSceneMouseHoverZone;
+        private GameSceneZone _gameSceneZone;
 
         public const int X = 0;
         public const int Y = 0;
-        public const int CellSize = 70;
-        public const int InnerCellSize = CellSize - 4;
-        public const int Width = Game.SceneWidth * CellSize;
-        public const int Height = Game.SceneHeight * CellSize;
-
-        public static Color NormalCellColor;
-        public static Color HoverCellColor;
-        public static Color GreenColor;
-        public static Color RedColor;
-        public static Color SelectedCellColor;
+        public const int Width = Game.SceneWidth * CellPainter.CellSize;
+        public const int Height = Game.SceneHeight * CellPainter.CellSize;
 
             
 
@@ -34,21 +26,13 @@ namespace TestGame
         {
             _mainForm = form;
             _game = game;
-            _gameSceneMouseHoverZone = new GameSceneZone(_mainForm);
+            _gameSceneZone = new GameSceneZone(_mainForm);
 
             _mainForm.Shown += (s, e) => DrawScene();
-            _gameSceneMouseHoverZone.Click += Click;
+            _gameSceneZone.Click += GameSceneClick;
             timer.Tick += (s, e) => DrawScene();
 
             _mainForm.ClientSize = new Size(GameScene.Width, GameScene.Height + ButtonsPanel.Height);
-
-            const int bright = 12;
-            NormalCellColor = Color.FromArgb(bright, bright, bright);
-            const int bright2 = 120;
-            HoverCellColor = Color.FromArgb(bright2, bright2, bright2);
-            GreenColor = Color.FromArgb(40, 150, 40);
-            RedColor = Color.FromArgb(150, 40, 40);
-            SelectedCellColor = Color.FromArgb(150, 150, 40);
         }  
 
 
@@ -63,35 +47,32 @@ namespace TestGame
             {
                 for (int x = 0; x < Game.SceneWidth; x++)
                 {
-                    MainForm.G.FillRectangle(new SolidBrush(NormalCellColor), x * CellSize, y * CellSize, InnerCellSize, InnerCellSize);
+                    CellPainter.DrawOnGrid(CellPainter.NormalCellColor, x, y);
                 }
             }
 
             // Draw hover cell
-            if (_gameSceneMouseHoverZone.IsMouseHover())
+            if (_gameSceneZone.IsMouseHover())
             {
-                var coordinates = _gameSceneMouseHoverZone.GetHoverCellCoordinate();
+                var coordinates = _gameSceneZone.GetHoverCellCoordinate();
                 int hoverCellX = coordinates.Item1;
                 int hoverCellY = coordinates.Item2;
 
-                int posX = hoverCellX * CellSize;
-                int posY = hoverCellY * CellSize;
-
                 if (_game.Buildings[hoverCellX, hoverCellY] != null && ButtonsSelector.ButtonName == null)
                 {
-                    MainForm.G.FillRectangle(new SolidBrush(HoverCellColor), posX, posY, InnerCellSize, InnerCellSize);
+                    CellPainter.DrawOnGrid(CellPainter.HoverCellColor, hoverCellX, hoverCellY);
                 }
 
                 if (ButtonsSelector.ButtonName != null)
                 {
                     if (_game.Buildings[hoverCellX, hoverCellY] == null)
                     {
-                        MainForm.G.FillRectangle(new SolidBrush(GreenColor), posX, posY, InnerCellSize, InnerCellSize);
+                        CellPainter.DrawOnGrid(CellPainter.GreenColor, hoverCellX, hoverCellY);
                         BuildingPainter.DrawOnGrid(new Building(ButtonsSelector.ButtonName), hoverCellX, hoverCellY);
                     }
                     else
                     {
-                        MainForm.G.FillRectangle(new SolidBrush(RedColor), posX, posY, InnerCellSize, InnerCellSize);
+                        CellPainter.DrawOnGrid(CellPainter.RedColor, hoverCellX, hoverCellY);
                     }
 
                 }
@@ -100,10 +81,7 @@ namespace TestGame
             // Draw selected cell
             if (CellSelector.IsCellSelected())
             {
-                int posX = CellSelector.X * CellSize;
-                int posY = CellSelector.Y * CellSize;
-
-                MainForm.G.FillRectangle(new SolidBrush(SelectedCellColor), posX, posY, InnerCellSize, InnerCellSize);
+                CellPainter.DrawOnGrid(CellPainter.SelectedCellColor, CellSelector.X, CellSelector.Y);
             }
 
             // Draw buildings
@@ -113,7 +91,7 @@ namespace TestGame
                 {
                     if (_game.Buildings[x, y] != null)
                     {
-                        _game.Buildings[x, y].DrawOnGrid(x, y);
+                        BuildingPainter.DrawOnGrid(_game.Buildings[x, y], x, y);
                     }
                 }
             }
@@ -122,7 +100,7 @@ namespace TestGame
 
 
 
-        private void Click(object s, GameSceneZoneEventArgs e)
+        private void GameSceneClick(object s, GameSceneZoneEventArgs e)
         {
             if (e.Button == MouseButtons.Left) // Левый клик
             {

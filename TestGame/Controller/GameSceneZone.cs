@@ -51,8 +51,8 @@ namespace TestGame
         public Tuple<int, int> GetHoverCellCoordinate()
         {
             var position = _mainForm.PointToClient(Cursor.Position);
-            int hoverCellX = (position.X - GameScene.X) / GameScene.CellSize;
-            int hoverCellY = (position.Y - GameScene.Y) / GameScene.CellSize;
+            int hoverCellX = (position.X - GameScene.X) / CellPainter.CellSize;
+            int hoverCellY = (position.Y - GameScene.Y) / CellPainter.CellSize;
             return new Tuple<int, int>(hoverCellX, hoverCellY);
         }
 
