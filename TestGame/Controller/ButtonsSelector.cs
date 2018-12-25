@@ -22,11 +22,11 @@ namespace TestGame
 
 
 
-        public static void Select(String buildingName)
+        public static void Select(String buttonName)
         {
-            ButtonName = buildingName;
+            ButtonName = buttonName;
             if (Selected != null)
-                Selected(buildingName);
+                Selected(buttonName);
         }
 
 

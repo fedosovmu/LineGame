@@ -86,6 +86,14 @@ namespace TestGame
                 button.Deactivate();
             };
 
+            ButtonsSelector.Selected += (buttonName) =>
+            {
+                if (capture != buttonName)
+                {
+                    button.Deactivate();
+                }
+            };
+
             return button;
         }
 
