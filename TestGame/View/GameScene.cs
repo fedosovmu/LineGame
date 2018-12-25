@@ -84,7 +84,7 @@ namespace TestGame
             }
 
             // Draw tensioning line
-            if (_lineTensioner.IsSelected())
+            if (_gameSceneZone.IsMouseHover() && _lineTensioner.IsSelected())
             {
                 var position = _gameSceneZone.GetHoverCellCoordinate();
                 var x = position.Item1;
@@ -92,14 +92,19 @@ namespace TestGame
                 
                 if (x != _lineTensioner.X || y != _lineTensioner.Y)
                 {
-                    LinePainter.DrawOnGrid(CellPainter.GreenColor, _lineTensioner.X, _lineTensioner.Y, x, y);
+                    CellPainter.DrawOnGrid(CellPainter.GreenColor, _lineTensioner.X, _lineTensioner.Y);
+                    CellPainter.DrawOnGrid(CellPainter.GreenColor, x, y);
+                    LinePainter.DrawOnGrid(_lineTensioner.X, _lineTensioner.Y, x, y);
                 }
             }
 
-
-
             // Draw Lines
-            // ...
+            foreach (var line in _game.Lines)
+            {
+                LinePainter.DrawOnGrid(line.Begin.X, line.Begin.Y, line.End.X, line.End.Y);
+            }
+
+
             // Draw buildings
             for (int y = 0; y < Game.SceneHeight; y++)
             {

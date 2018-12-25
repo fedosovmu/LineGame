@@ -17,6 +17,7 @@ namespace TestGame
         {
             Begin = begin;
             End = end;
+            if (Begin == End) throw new ArgumentException("The building cannot connect with itself");
         }
 
         

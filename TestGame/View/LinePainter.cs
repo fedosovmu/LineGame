@@ -16,16 +16,13 @@ namespace TestGame
 
 
 
-        public static void DrawOnGrid(Color color, int fromX, int fromY, int toX, int toY)
+        public static void DrawOnGrid(int fromX, int fromY, int toX, int toY)
         {
-            CellPainter.DrawOnGrid(color, fromX, fromY);
-            CellPainter.DrawOnGrid(color, toX, toY);
-
             var fromCenterX = fromX * CellPainter.CellSize + CellPainter.CellSize / 2;
             var fromCenterY = fromY * CellPainter.CellSize + CellPainter.CellSize / 2;
             var toCenterX = toX * CellPainter.CellSize + CellPainter.CellSize / 2;
             var toCenterY = toY * CellPainter.CellSize + CellPainter.CellSize / 2;
-            MainForm.G.DrawLine(new Pen(color, 2), new Point(fromCenterX, fromCenterY), new Point(toCenterX, toCenterY));
+            MainForm.G.DrawLine(new Pen(CellPainter.GreenColor, 2), new Point(fromCenterX, fromCenterY), new Point(toCenterX, toCenterY));
         }
 
     }
