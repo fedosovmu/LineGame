@@ -44,9 +44,16 @@ namespace TestGame
             {
                 int selectedX = CellSelector.X;
                 int selectedY = CellSelector.Y;
+                var selectedBuilding = _game.Buildings[selectedX, selectedY];
 
-                String header = _game.Buildings[selectedX, selectedY].Name;
+                // Draw building name
+                String header = selectedBuilding.Name;
                 MainForm.G.DrawString(header, font, fontBrush, _x + 10, _y + 10);
+
+                // Draw building (X, Y)
+                String position =  "X: " + selectedBuilding.X + ", Y: " + selectedBuilding.Y;
+                MainForm.G.DrawString(position, font, fontBrush, _x + 155, _y + 50);
+
 
                 // Draw building
                 const int windowX = _x + 16;

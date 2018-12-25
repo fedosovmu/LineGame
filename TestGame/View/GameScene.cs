@@ -58,14 +58,14 @@ namespace TestGame
                 int hoverCellX = coordinates.Item1;
                 int hoverCellY = coordinates.Item2;
 
-                if (_game.Buildings[hoverCellX, hoverCellY] != null && ButtonsSelector.ButtonName == null)
+                if (_game.IsCellFree(hoverCellX, hoverCellY) == false && ButtonsSelector.IsSelected() == false)
                 {
                     CellPainter.DrawOnGrid(CellPainter.HoverCellColor, hoverCellX, hoverCellY);
                 }
 
-                if (ButtonsSelector.ButtonName != null)
+                if (ButtonsSelector.IsSelected())
                 {
-                    if (_game.Buildings[hoverCellX, hoverCellY] == null)
+                    if (_game.IsCellFree(hoverCellX, hoverCellY))
                     {
                         CellPainter.DrawOnGrid(CellPainter.GreenColor, hoverCellX, hoverCellY);
                         BuildingPainter.DrawOnGrid(new Building(ButtonsSelector.ButtonName), hoverCellX, hoverCellY);
@@ -74,7 +74,6 @@ namespace TestGame
                     {
                         CellPainter.DrawOnGrid(CellPainter.RedColor, hoverCellX, hoverCellY);
                     }
-
                 }
             }
 
@@ -95,7 +94,6 @@ namespace TestGame
                     }
                 }
             }
-
         }
 
 
@@ -104,11 +102,11 @@ namespace TestGame
         {
             if (e.Button == MouseButtons.Left) // Левый клик
             {
-                if (ButtonsSelector.ButtonName != null) // Выбрано здание
+                if (ButtonsSelector.IsSelected()) // Выбрано здание
                 {
-                    if (_game.Buildings[e.HoverCellX, e.HoverCellY] == null) // есть здание
+                    if (_game.IsCellFree(e.HoverCellX, e.HoverCellY)) // есть здание
                     {
-                        _game.Buildings[e.HoverCellX, e.HoverCellY] = new Building(ButtonsSelector.ButtonName);
+                        _game.Build(e.HoverCellX, e.HoverCellY, ButtonsSelector.ButtonName);
                         ButtonsSelector.Deselect();
                     }
                     else
@@ -118,7 +116,7 @@ namespace TestGame
                 }
                 else // Наводим пустой курсор
                 {
-                    if (_game.Buildings[e.HoverCellX, e.HoverCellY] != null) // есть здание
+                    if (_game.IsCellFree(e.HoverCellX, e.HoverCellY) == false) // есть здание
                     {
                         CellSelector.Select(e.HoverCellX, e.HoverCellY);
                     }

@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Controller\ButtonsSelector.cs" />
     <Compile Include="Model\Building.cs" />
+    <Compile Include="Model\Line.cs" />
     <Compile Include="View\BuildingPainter.cs" />
     <Compile Include="Controller\Button.cs" />
     <Compile Include="View\ButtonsPanel.cs" />

@@ -40,7 +40,7 @@ namespace TestGame
 
 
 
-        public static bool IsBuildingSelected()
+        public static bool IsSelected()
         {
             return (ButtonName != null);
         }

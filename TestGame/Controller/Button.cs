@@ -9,11 +9,8 @@ namespace TestGame
 {
     class Button
     {
-        public event EventHandler Click;
+        public event MouseEventHandler Click;
         public delegate void Draw(int x, int y, int width, int height);
-        //public delegate void DrawNormal(int x, int y, int width, int height);
-        //public delegate void DrawHover(int x, int y, int width, int height);
-        //public delegate void DrawActive(int x, int y, int width, int height);
         private Draw _drawNormal;
         private Draw _drawHover;
         private Draw _drawActive;
