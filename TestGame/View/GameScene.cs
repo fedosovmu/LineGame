@@ -11,9 +11,9 @@ namespace TestGame
 {
     class GameScene
     {
-        private MainForm _mainForm;
         private Game _game;
         private GameSceneZone _gameSceneZone;
+        private LineTensioner _lineTensioner;
 
         public const int X = 0;
         public const int Y = 0;
@@ -24,15 +24,15 @@ namespace TestGame
 
         public GameScene(MainForm form, Game game, Timer timer)
         {
-            _mainForm = form;
             _game = game;
-            _gameSceneZone = new GameSceneZone(_mainForm);
+            _gameSceneZone = new GameSceneZone(form);
+            _lineTensioner = new LineTensioner(form, game, _gameSceneZone);
 
-            _mainForm.Shown += (s, e) => DrawScene();
+            form.Shown += (s, e) => DrawScene();
             _gameSceneZone.Click += GameSceneClick;
             timer.Tick += (s, e) => DrawScene();
 
-            _mainForm.ClientSize = new Size(GameScene.Width, GameScene.Height + ButtonsPanel.Height);
+            form.ClientSize = new Size(GameScene.Width, GameScene.Height + ButtonsPanel.Height);
         }  
 
 

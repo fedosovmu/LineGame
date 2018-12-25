@@ -35,7 +35,7 @@ namespace TestGame
             _drawHover = drawHover;
             _drawActive = drawActive;
             timer.Tick += Timer_Tick;
-            form.MouseClick += Form_MouseClick;
+            form.MouseDown += Form_MouseDown;
             form.Shown += (s, e) => drawNormal(x, y, width, height);
         }
 
@@ -84,7 +84,7 @@ namespace TestGame
 
 
 
-        private void Form_MouseClick(object sender, MouseEventArgs e)
+        private void Form_MouseDown(object sender, MouseEventArgs e)
         {
             if (_mouseHoverZone.IsMouseHover())
             {

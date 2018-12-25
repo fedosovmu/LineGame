@@ -36,7 +36,7 @@ namespace TestGame
             : base(form, GameScene.X, GameScene.Y, GameScene.Width, GameScene.Height)
         {
             _mainForm = form;
-            _mainForm.MouseClick += (s, e) =>
+            _mainForm.MouseDown += (s, e) =>
             {
                 if (IsMouseHover())
                 {

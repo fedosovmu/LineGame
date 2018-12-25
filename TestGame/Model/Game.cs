@@ -42,6 +42,7 @@ namespace TestGame
         }
 
 
+
         public void Build(int x, int y, Building building)
         {
             if (IsCellFree(x, y))
