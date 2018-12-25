@@ -83,6 +83,23 @@ namespace TestGame
                 CellPainter.DrawOnGrid(CellPainter.SelectedCellColor, CellSelector.X, CellSelector.Y);
             }
 
+            // Draw tensioning line
+            if (_lineTensioner.IsSelected())
+            {
+                var position = _gameSceneZone.GetHoverCellCoordinate();
+                var x = position.Item1;
+                var y = position.Item2;
+                
+                if (x != _lineTensioner.X || y != _lineTensioner.Y)
+                {
+                    LinePainter.DrawOnGrid(CellPainter.GreenColor, _lineTensioner.X, _lineTensioner.Y, x, y);
+                }
+            }
+
+
+
+            // Draw Lines
+            // ...
             // Draw buildings
             for (int y = 0; y < Game.SceneHeight; y++)
             {
