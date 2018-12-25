@@ -13,8 +13,7 @@ namespace TestGame
     {
         private MainForm _mainForm;
         private Game _game;
-        private ButtonsPanel _buttonsPanel;
-        private GameSceneMouseHoverZone _gameSceneMouseHoverZone;
+        private GameSceneZone _gameSceneMouseHoverZone;
 
         public const int X = 0;
         public const int Y = 0;
@@ -22,8 +21,6 @@ namespace TestGame
         public const int InnerCellSize = CellSize - 4;
         public const int Width = Game.SceneWidth * CellSize;
         public const int Height = Game.SceneHeight * CellSize;
-
-        public static CellSecector CellSecector; // <- костыль
 
         public static Color NormalCellColor;
         public static Color HoverCellColor;
@@ -33,20 +30,17 @@ namespace TestGame
 
             
 
-        public GameScene(MainForm form, Game game, Timer timer, ButtonsPanel buttonsPanel)
+        public GameScene(MainForm form, Game game, Timer timer)
         {
             _mainForm = form;
             _game = game;
-            _buttonsPanel = buttonsPanel;
-            _gameSceneMouseHoverZone = new GameSceneMouseHoverZone(_mainForm);
+            _gameSceneMouseHoverZone = new GameSceneZone(_mainForm);
 
             _mainForm.Shown += (s, e) => DrawScene();
-            _gameSceneMouseHoverZone.ClickOnCell += ClickOnCell;
+            _gameSceneMouseHoverZone.Click += Click;
             timer.Tick += (s, e) => DrawScene();
 
             _mainForm.ClientSize = new Size(GameScene.Width, GameScene.Height + ButtonsPanel.Height);
-
-            CellSecector = new CellSecector();
 
             const int bright = 12;
             NormalCellColor = Color.FromArgb(bright, bright, bright);
@@ -83,17 +77,17 @@ namespace TestGame
                 int posX = hoverCellX * CellSize;
                 int posY = hoverCellY * CellSize;
 
-                if (_game.Buildings[hoverCellX, hoverCellY] != null && _buttonsPanel.SelectedButtonName == null)
+                if (_game.Buildings[hoverCellX, hoverCellY] != null && ButtonsSelector.ButtonName == null)
                 {
                     MainForm.G.FillRectangle(new SolidBrush(HoverCellColor), posX, posY, InnerCellSize, InnerCellSize);
                 }
 
-                if (_buttonsPanel.SelectedButtonName != null)
+                if (ButtonsSelector.ButtonName != null)
                 {
                     if (_game.Buildings[hoverCellX, hoverCellY] == null)
                     {
                         MainForm.G.FillRectangle(new SolidBrush(GreenColor), posX, posY, InnerCellSize, InnerCellSize);
-                        BuildingPainter.DrawOnGrid(new Building(_buttonsPanel.SelectedButtonName), hoverCellX, hoverCellY);
+                        BuildingPainter.DrawOnGrid(new Building(ButtonsSelector.ButtonName), hoverCellX, hoverCellY);
                     }
                     else
                     {
@@ -104,10 +98,10 @@ namespace TestGame
             }
 
             // Draw selected cell
-            if (CellSecector.IsCellSelected())
+            if (CellSelector.IsCellSelected())
             {
-                int posX = CellSecector.X * CellSize;
-                int posY = CellSecector.Y * CellSize;
+                int posX = CellSelector.X * CellSize;
+                int posY = CellSelector.Y * CellSize;
 
                 MainForm.G.FillRectangle(new SolidBrush(SelectedCellColor), posX, posY, InnerCellSize, InnerCellSize);
             }
@@ -128,16 +122,16 @@ namespace TestGame
 
 
 
-        private void ClickOnCell(object s, MouseEventArgs e, int hoverCellX, int hoverCellY)
+        private void Click(object s, GameSceneZoneEventArgs e)
         {
             if (e.Button == MouseButtons.Left) // Левый клик
             {
-                if (_buttonsPanel.SelectedButtonName != null) // Выбрано здание
+                if (ButtonsSelector.ButtonName != null) // Выбрано здание
                 {
-                    if (_game.Buildings[hoverCellX, hoverCellY] == null) // есть здание
+                    if (_game.Buildings[e.HoverCellX, e.HoverCellY] == null) // есть здание
                     {
-                        _game.Buildings[hoverCellX, hoverCellY] = new Building(_buttonsPanel.SelectedButtonName);
-                        _buttonsPanel.DeactivateButtons();
+                        _game.Buildings[e.HoverCellX, e.HoverCellY] = new Building(ButtonsSelector.ButtonName);
+                        ButtonsSelector.Deselect();
                     }
                     else
                     {
@@ -146,21 +140,20 @@ namespace TestGame
                 }
                 else // Наводим пустой курсор
                 {
-                    if (_game.Buildings[hoverCellX, hoverCellY] != null) // есть здание
+                    if (_game.Buildings[e.HoverCellX, e.HoverCellY] != null) // есть здание
                     {
-                        CellSecector.Select(hoverCellX, hoverCellY);
+                        CellSelector.Select(e.HoverCellX, e.HoverCellY);
                     }
                     else
                     {
-                        CellSecector.Deselect();
+                        CellSelector.Deselect();
                     }
                 }
             }
             
             if (e.Button == MouseButtons.Right) // Правый клик
             {
-                _buttonsPanel.DeactivateButtons();
-                CellSecector.Deselect();
+                CellSelector.Deselect();
             }
         }
     }

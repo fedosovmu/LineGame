@@ -40,10 +40,10 @@ namespace TestGame
             //MainForm.G.DrawString(header, font, fontBrush, _x + 10, _y + 10);
 
 
-            if (GameScene.CellSecector.IsCellSelected())
+            if (CellSelector.IsCellSelected())
             {
-                int selectedX = GameScene.CellSecector.X;
-                int selectedY = GameScene.CellSecector.Y;
+                int selectedX = CellSelector.X;
+                int selectedY = CellSelector.Y;
 
                 String header = _game.Buildings[selectedX, selectedY].Name;
                 MainForm.G.DrawString(header, font, fontBrush, _x + 10, _y + 10);

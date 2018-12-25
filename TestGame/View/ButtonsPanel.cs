@@ -12,11 +12,11 @@ namespace TestGame
     {
         private MainForm _mainForm;
         private Game _game;
+
         public const int X = -1;
         public const int Y = GameScene.Height;
         public const int Height = 200;
         public const int Width = 700;
-        public String SelectedButtonName { get; private set; }
         private Button _button1;
         private Button _button2;
         private Button _button3;
@@ -26,58 +26,38 @@ namespace TestGame
 
         public ButtonsPanel(MainForm form, Game game, Timer timer)
         {
-            SelectedButtonName = null;
             _mainForm = form;
             _game = game;
             _mainForm.Shown += Form_Shown;
             _button1 = ButtonsInitialization(timer, "Extractor", 30, 50);
             _button2 = ButtonsInitialization(timer, "Converter", 150, 50);
             _button3 = ButtonsInitialization(timer, "Storage", 270, 50);
-            _button4 = ButtonsInitialization(timer, "LoL", 390, 50);
-
-            _mainForm.MouseClick += (s, e) =>
-            {
-                if (e.Button == MouseButtons.Right)
-                {                    
-                    DeactivateButtons();
-                }
-            };
+            _button4 = ButtonsInitialization(timer, "LoL", 390, 50);           
         }
 
 
 
-        public void DeactivateButtons()
-        {
-            SelectedButtonName = null;
-            _button1.Deactivate();
-            _button2.Deactivate();
-            _button3.Deactivate();
-            _button4.Deactivate();
-        }
-
-
-
-        private Button ButtonsInitialization(Timer timer, String Capture, int x, int y)
+        private Button ButtonsInitialization(Timer timer, String capture, int x, int y)
         {
             const int buttonSize = 100;
-            Building buttonBuilding = new Building(Capture);
+            Building buttonBuilding = new Building(capture);
             const int buildingIndent = (buttonSize - GameScene.CellSize) / 2 + 2;
 
-            Button.DrawNormal drawNormal = (buttonX, buttonY, width, height) =>
+            Button.Draw drawNormal = (buttonX, buttonY, width, height) =>
             {
                 var color = GameScene.NormalCellColor;
                 MainForm.G.FillRectangle(new SolidBrush(color), buttonX - 1, buttonY - 1, width + 2, height + 2);
                 BuildingPainter.Draw(buttonBuilding, buttonX + buildingIndent, buttonY + buildingIndent);
             };
 
-            Button.DrawHover drawHover = (buttonX, buttonY, width, height) =>
+            Button.Draw drawHover = (buttonX, buttonY, width, height) =>
             {
                 var color = GameScene.HoverCellColor;
                 MainForm.G.FillRectangle(new SolidBrush(color), buttonX, buttonY, width, height);
                 BuildingPainter.Draw(buttonBuilding, buttonX + buildingIndent, buttonY + buildingIndent);
             };
 
-            Button.DrawActive drawActive = (buttonX, buttonY, width, height) =>
+            Button.Draw drawActive = (buttonX, buttonY, width, height) =>
             {
                 var color = GameScene.GreenColor;
                 MainForm.G.FillRectangle(new SolidBrush(color), buttonX, buttonY, width, height);
@@ -89,8 +69,21 @@ namespace TestGame
 
             button.Click += (s, e) =>
             {
-                SelectedButtonName = Capture;
-                GameScene.CellSecector.Deselect(); // <- костыль
+                CellSelector.Deselect(); // <- костыль
+                ButtonsSelector.Select(capture);
+            };
+
+            _mainForm.MouseClick += (s, e) =>
+            {
+                if (e.Button == MouseButtons.Right)
+                {
+                    button.Deactivate();
+                }
+            };
+
+            ButtonsSelector.Deselected += () =>
+            {
+                button.Deactivate();
             };
 
             return button;

@@ -40,8 +40,8 @@ namespace TestGame
             _mainTimer.Interval = 25;
 
             _game = new Game();
-            _buttonsPanel = new ButtonsPanel(this, _game, _mainTimer);
-            _gameScene = new GameScene(this, _game, _mainTimer, _buttonsPanel);
+            _buttonsPanel = new ButtonsPanel(this, _game, _mainTimer);          
+            _gameScene = new GameScene(this, _game, _mainTimer);
             _infoPanel = new InfoPanel(this, _game, _mainTimer);
 
             _mainTimer.Tick += (s, e) => this.Refresh();          

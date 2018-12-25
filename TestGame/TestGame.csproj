@@ -46,22 +46,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Building.cs" />
-    <Compile Include="BuildingPainter.cs" />
-    <Compile Include="Button.cs" />
-    <Compile Include="ButtonsPanel.cs" />
-    <Compile Include="CellSecector.cs" />
-    <Compile Include="Game.cs" />
-    <Compile Include="GameScene.cs" />
-    <Compile Include="GameSceneMouseHoverZone.cs" />
-    <Compile Include="InfoPanel.cs" />
+    <Compile Include="Controller\ButtonsSelector.cs" />
+    <Compile Include="Model\Building.cs" />
+    <Compile Include="View\BuildingPainter.cs" />
+    <Compile Include="Controller\Button.cs" />
+    <Compile Include="View\ButtonsPanel.cs" />
+    <Compile Include="Controller\CellSelector.cs" />
+    <Compile Include="Model\Game.cs" />
+    <Compile Include="View\GameScene.cs" />
+    <Compile Include="Controller\GameSceneZone.cs" />
+    <Compile Include="View\InfoPanel.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MouseHoverZone.cs" />
+    <Compile Include="Controller\MouseHoverZone.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainForm.resx">

@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace TestGame
 {
-    class MouseHoverZone
+    public class MouseHoverZone
     {
         MainForm _mainForm;
         private int _x;

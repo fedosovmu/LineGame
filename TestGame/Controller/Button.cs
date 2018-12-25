@@ -10,12 +10,13 @@ namespace TestGame
     class Button
     {
         public event EventHandler Click;
-        public delegate void DrawNormal(int x, int y, int width, int height);
-        public delegate void DrawHover(int x, int y, int width, int height);
-        public delegate void DrawActive(int x, int y, int width, int height);
-        private DrawNormal _drawNormal;
-        private DrawHover _drawHover;
-        private DrawActive _drawActive;
+        public delegate void Draw(int x, int y, int width, int height);
+        //public delegate void DrawNormal(int x, int y, int width, int height);
+        //public delegate void DrawHover(int x, int y, int width, int height);
+        //public delegate void DrawActive(int x, int y, int width, int height);
+        private Draw _drawNormal;
+        private Draw _drawHover;
+        private Draw _drawActive;
         private MouseHoverZone _mouseHoverZone;
         private bool _isMouseHover = false;
         private bool _isButtonActive = false;
@@ -26,7 +27,7 @@ namespace TestGame
 
 
 
-        public Button (MainForm form, Timer timer, int x, int y, int width, int height, DrawNormal drawNormal, DrawHover drawHover, DrawActive drawActive)
+        public Button (MainForm form, Timer timer, int x, int y, int width, int height, Draw drawNormal, Draw drawHover, Draw drawActive)
         {
             _mouseHoverZone = new MouseHoverZone(form, x, y, width, height);
             _x = x;

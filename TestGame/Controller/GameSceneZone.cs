@@ -7,15 +7,32 @@ using System.Windows.Forms;
 
 namespace TestGame
 {
-    class GameSceneMouseHoverZone : MouseHoverZone
+    class GameSceneZoneEventArgs : EventArgs
     {
-        private MainForm _mainForm;
-        public delegate void GameSceneClickEventHandler(object s, MouseEventArgs e, int hoverCellX, int hoverCellY);
-        public event GameSceneClickEventHandler ClickOnCell;
+        public MouseButtons Button;
+        public int HoverCellX;
+        public int HoverCellY;
+
+        public GameSceneZoneEventArgs (MouseButtons button, int hoverCellX, int hoverCellY)
+        {
+            Button = button;
+            HoverCellX = hoverCellX;
+            HoverCellY = hoverCellY;
+        }
+    }
+
+    delegate void GameSceneZoneEventHandler(object s, GameSceneZoneEventArgs e);
 
 
 
-        public GameSceneMouseHoverZone(MainForm form)
+    class GameSceneZone : MouseHoverZone
+    {
+        private MainForm _mainForm;       
+        public event GameSceneZoneEventHandler Click;
+
+
+
+        public GameSceneZone(MainForm form)
             : base(form, GameScene.X, GameScene.Y, GameScene.Width, GameScene.Height)
         {
             _mainForm = form;
@@ -24,7 +41,7 @@ namespace TestGame
                 if (IsMouseHover())
                 {
                     var coordinates = GetHoverCellCoordinate();                   
-                    ClickOnCell(this, e, coordinates.Item1, coordinates.Item2);
+                    Click(this, new GameSceneZoneEventArgs (e.Button, coordinates.Item1, coordinates.Item2));
                 }
             };
         }
