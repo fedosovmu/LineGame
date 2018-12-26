@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace TestGame
 {
@@ -15,9 +16,9 @@ namespace TestGame
 
         public Line (Building begin, Building end)
         {
+            if (begin == end) throw new ArgumentException("The building cannot connect with itself");
             Begin = begin;
             End = end;
-            if (Begin == End) throw new ArgumentException("The building cannot connect with itself");
         }
 
         

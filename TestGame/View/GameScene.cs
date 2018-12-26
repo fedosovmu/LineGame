@@ -90,7 +90,7 @@ namespace TestGame
                 var x = position.Item1;
                 var y = position.Item2;
                 
-                if ( _game.IsCellFree(_lineTensioner.X, _lineTensioner.Y) == false && (x != _lineTensioner.X || y != _lineTensioner.Y))
+                if (_game.IsCellFree(_lineTensioner.X, _lineTensioner.Y) == false && (x != _lineTensioner.X || y != _lineTensioner.Y))
                 {
                     CellPainter.DrawOnGrid(CellPainter.GreenColor, _lineTensioner.X, _lineTensioner.Y);
                     CellPainter.DrawOnGrid(CellPainter.GreenColor, x, y);
