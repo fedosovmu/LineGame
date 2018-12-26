@@ -32,7 +32,7 @@ namespace TestGame
             _button1 = ButtonsInitialization(timer, "Extractor", 30, 50);
             _button2 = ButtonsInitialization(timer, "Converter", 150, 50);
             _button3 = ButtonsInitialization(timer, "Storage", 270, 50);
-            _button4 = ButtonsInitialization(timer, "LoL", 390, 50);           
+            _button4 = ButtonsInitialization(timer, "^__^", 390, 50);           
         }
 
 
@@ -69,7 +69,7 @@ namespace TestGame
 
             button.Click += (s, e) =>
             {
-                CellSelector.Deselect(); // <- костыль
+                CellSelector.Deselect();
                 ButtonsSelector.Select(capture);
             };
 
@@ -77,7 +77,7 @@ namespace TestGame
             {
                 if (e.Button == MouseButtons.Right)
                 {
-                    button.Deactivate();
+                    ButtonsSelector.Deselect();
                 }
             };
 
