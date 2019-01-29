@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TestGame.Properties
+namespace LineGame.Properties
 {
 
 

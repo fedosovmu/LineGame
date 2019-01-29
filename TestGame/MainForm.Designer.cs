@@ -1,4 +1,4 @@
-﻿namespace TestGame
+﻿namespace LineGame
 {
     partial class MainForm
     {

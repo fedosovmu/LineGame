@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-namespace TestGame
+namespace LineGame
 {
     static class LinePainter
     {
@@ -24,7 +24,7 @@ namespace TestGame
             var endCenterY = endY * CellPainter.CellSize + CellPainter.CellSize / 2;
             MainForm.G.DrawLine(new Pen(CellPainter.GreenColor, 2), new Point(beginCenterX, beginCenterY), new Point(endCenterX, endCenterY));
 
-            //Draw line from edge to edge
+            //Draw line from side to side
             //var beginEdgeX = (endCenterX * 5 + beginCenterX) / 6;
             //var beginEdgeY = (endCenterY * 5 + beginCenterY) / 6;
             //var endEdgeX = (endCenterX + beginCenterX * 5) / 6;
@@ -42,7 +42,7 @@ namespace TestGame
             int indentY = 0;
             int indent = 30;
 
-            if (UpRight && UpLeft) indentY = -1 * indent; // UP
+            if (UpRight && UpLeft) indentY = -1 * indent; // Up
             else if (UpRight && !UpLeft) indentX = indent; // Right
             else if (!UpRight && UpLeft) indentX = -1 * indent; // Left
             else if (!UpRight && !UpLeft) indentY = indent; // Down

@@ -7,7 +7,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Input;
 
-namespace TestGame
+namespace LineGame
 {
     class GameScene
     {

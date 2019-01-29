@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms; // <-- MessageBox
 
-namespace TestGame
+namespace LineGame
 {
     class Game
     {
@@ -19,7 +19,7 @@ namespace TestGame
         public Game ()
         {
             Buildings = new Building[SceneWidth, SceneHeight];
-            // test
+            // add test objects
             var b1 = new Building(); 
             var b2 = new Building("Extractor");
             var b3 = new Building("Converter");
